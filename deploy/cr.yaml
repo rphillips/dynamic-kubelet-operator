@@ -1,0 +1,4 @@
+apiVersion: "dynamickubelet.config.openshift.io/v1alpha1"
+kind: "DynamicKubeletOperator"
+metadata:
+  name: "example"
