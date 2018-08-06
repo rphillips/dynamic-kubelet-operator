@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dynamic-kubelet-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: dynamic-kubelet-operator
+  template:
+    metadata:
+      labels:
+        name: dynamic-kubelet-operator
+    spec:
+      containers:
+        - name: dynamic-kubelet-operator
+          image: docker.com/ryan_phillips/dynamic-kubelet-operator
+          ports:
+          - containerPort: 60000
+            name: metrics
+          command:
+          - dynamic-kubelet-operator
+          imagePullPolicy: Always
+          env:
+            - name: WATCH_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: OPERATOR_NAME
+              value: "dynamic-kubelet-operator"
